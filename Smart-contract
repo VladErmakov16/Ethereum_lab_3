@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MyContract3 {
+    uint public data;
+    address public owner;
+    
+    event DataUpdated(address indexed user, uint newValue);
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    constructor() {
+        data = 0;
+        owner = msg.sender;
+    }
+
+
+    function setData(uint _newValue) public {
+        data = _newValue;
+        emit DataUpdated(msg.sender, _newValue);
+    }
+
+    function transferOwnership(address _newOwner) public {
+        require(_newOwner != address(0), "Invalid new owner address");
+        emit OwnershipTransferred(owner, _newOwner);
+        owner = _newOwner;
+    }
+
+    function getData() public view returns (uint) {
+        return data;
+    }
+}
